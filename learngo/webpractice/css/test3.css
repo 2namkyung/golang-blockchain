@@ -1,0 +1,23 @@
+.header{
+    width:1000px;
+    height:100px;
+    background-color: red;
+}
+
+.nav{
+    width:1000px;
+    height:50px;
+    background-color: blue;
+}
+
+.content{
+    width:1000px;
+    height:500px;
+    background-color: yellow;
+}
+
+.footer{
+    width:1000px;
+    height:50px;
+    background-color: green;
+}

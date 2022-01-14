@@ -1,0 +1,48 @@
+Spew
+- GO data 구조와 각 부분을 완벽한 포맷으로 볼 수 있게 도와주는 패키지
+
+Gorilla/mux
+- Web Handler를 작성하기 위해 많이 사용하는 패키지
+
+Gotdotenv
+- .env파일로부터 읽을 수 있게 도와주는 패키지
+ -> root directory에서 http port같이 하드코드를 할 수 있는 파일
+
+ # Networking
+ - TCP 통신을 이용한 연결
+ - 블록 생성 , 블록 검사 , 블록체인 동기화
+
+  1) PoW
+  - 참가자들이 문자와 숫자의 조합을 통해 특정 숫자의 선행에 0이 포함될 때까지 해시 수행
+
+  2) PoS
+  * PoS Validators(Node)
+  - Validator가 TCP Server에 연결될 때 몇 가지 기능이 필요
+   토큰 개수를 입력할 수 있어야 한다
+   업데이트 된 블록체인을 받을 수 있어야한다
+   블록 생성에 선택된 노드를 알 수 있어야한다
+   전체 노드 리스트에 자신의 노드를 추가할 수 있어야 한다
+   BPM을 입력할 수 있어야한다
+   새로운 블록을 제출 할 수 있어야 한다
+
+  * Netcat
+  - nc localhost port
+
+ # IPFS (Interplanetary File System)
+ - 각 노드에 해시 파일을 저장하는 P2P Protocol , Torrent와 비슷한 개념
+ 1) A는 PDF 파일을 IPFS에 올린다
+ 2) A는 자신의 Working Directory에 파일을 놓는다
+ 3) IPFS에게 파일을 등록하길 원한다고 요청하면 파일의 해시를 생성한다
+ 4) IPFS Network에서 누구나 해시 값을 알면 파일에 접근할 수 있다
+
+  * 보안문제
+  - 어느 누구나 파일의 해시를 얻을 수 있기 때문에 해당 파일을 쉽게 가질 수 있다
+  - 민감한 정보가 담긴 파일은 IPFS에 올리지 않는다
+
+  + 비대칭 암호화
+  - 파일을 올리기 전에 공개키를 이용하여 파일을 암호화하여 IPFS Network에 올린다
+  - 다운로드 후 개인키로 복호화 하여 파일을 볼 수 있다
+   -> 'GPG Tool' 이용
+   -> IPFS + 비대칭 암호화 in Blockchain
+
+

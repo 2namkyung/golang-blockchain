@@ -1,0 +1,7 @@
+1. createwallet
+
+2. createblockchain -address wallet_address
+
+3. getbalance -address wallet_address
+
+4. send -from wallet_adress -to wallet_address

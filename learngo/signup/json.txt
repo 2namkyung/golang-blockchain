@@ -1,0 +1,20 @@
+
+// User Post SignUp
+{
+  "user_id":"nk1292",
+  "password":"1234",
+  "name":"이남경",
+  "birth_date":"0714",
+  "gender":"남",
+  "phone":"01047733208",
+  "location":"Busan"
+}
+
+// Item Post Add
+{
+  "name":"사과",
+  "price":"1000",
+  "market":"ACE",
+  "created_at":"1028",
+  "user_id":"nk1292"
+}

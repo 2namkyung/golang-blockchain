@@ -1,0 +1,90 @@
+* net/http
+- ListenAndServer(), Handle(), HandleFunc()
+
+ 1) ListenAndServer
+ - 지정된 포트에 웹 서버를 열고 클라이언트 Request를 받아들인다
+ - ListenAndServer(port, ServerMux)
+  -> ListenAndServer(":5000", nil)
+  -> ServerMux = 기본적으로 HTTP Request Router , nil일 경우 DefaultServerMux 사용
+  -> 개발자가 별도로 ServeMux를 만들어 Routing 부분을 세밀하게 제어할 수 있다
+
+ 2) Handle(), HandleFunc()
+ - 요청된 Request Path에 어떤 Request Handler를 사용할 지 지정하는 Routing 역할을 한다
+ - Handle : 인스턴스 핸들러 등록 시 사용 -> http.Handle("/path", ServeHTTP 구현)
+ - HandleFunc : 핸들러 함수를 직접 등록 -> http.HandleFunc("/pah", func(w http.ResponseWriter, r *http.Request){})
+
+  * http.ResponseWriter Parameter
+  - HTTP Response에 Data를 쓸 수 있게 한다
+  - w.WriteHeader(http.StatusBadRequest)
+  - w.Header().Add("Content-Type", "application/json")
+
+  * http.Request Parameter
+  - 입력된 Request 요청을 체크
+
+  * Testing Setting
+  - goconvey : background go test package
+  - assert -> Equal , NoError . . .
+
+ * Golang Router & Dispatcher : gorilla/mux Library
+  - go get github.com/gorilla/mux
+  - mux := http.NewRouter() , http.ServeHTTP(":port", mux)
+  - vars := mux.Vars(r)
+	  id, err := strconv.Atoi(vars["id"])
+   -> gorilla/mux + negrnoi + render
+   -> static file 설정 순서 주의 ( api -> css -> html )
+
+ * gorilla/pat
+  - a pretty simple HTTP router for Go
+  - mux := pat.New()
+  - mux.Get("/users", GetUserInfoHandler)
+  - mux.POST("/users", AddUserInfoHandler)
+
+ * negroni
+  - http middleware
+  - go get github.com/urfave/negroni
+
+ * render
+  - JSON과 HTML Template을 렌더링하는 라이브러리
+
+ * gorilla/session
+  - Cookie 정보를 암호화/복호화
+  - var store = sessions.NewCookieStore([]byte(os.Getenv("SESSION_KEY")))
+   -> SESSION_KEY : make uuid
+  
+ * DB Query
+  - CREATE TABLE IF NOT EXISTS todos(
+			id INTEGER PRIMARY KEY AUTOINCREMENT, -> 기본키는 기본 인덱스가 생성되어져있다
+			sessionId STRING,  -> # 추가적으로 인덱스 생성하기
+			name TEXT,
+			completed BOOLEAN,
+			createdAt DATETIME
+			);
+  # CREATE INDEX IF NOT EXISTS sessionIdIndexOnTodos ON todos(
+		sessionId ASC
+		);  
+ 
+ <-- Web Hosting -->
+ * Heroku : PaaS Service
+  - Statelss Server , Heroku는 'dyno' Docker Conatainer images 사용
+   -> PaaS Service이므로 Container는 Heroku에서 Control한다.
+    -> dyno가 기존의 dyno의 같은 물리 서버에서 돌아가는 지는 알 수 없다
+   -> 새로운 dyno가 만들어질 때, image의 정보로 만들어지기 때문에 처음의 상태로 돌아간다
+    -> File DB를 사용할 수 없다
+       sol) DB 사용
+  - Free Tier DB도 제공한다 : PostgreDB , Record 수의 제약이 있다
+
+   * Heroku Command
+   - heroku login
+   - heroku create
+   - heroku config:set SESSION_KEY=80fee3e3-49f2-405a-8e1e-c18a4a1bc71e
+   - git add & commit
+   - heroku git:remote -a [app name]
+   - git push heroku master
+   - heroku open
+   - heroku apps
+   - heroku addons:create heroku-postgresql:hobby-dev
+    -> config : DATABASE_URL 이용
+   - heroku ps:scale web=0
+   - heroku ps:scale web=1
+  
+   
